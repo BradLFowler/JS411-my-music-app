@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
+import Dashboard from './components/Dashboard';
+
+import './App.css';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+
+export default function App() {
+  const [loggedIn, setLogin] = useState(false)
+  const [text, setText] = useState("")
+
+  const handleLogin = () => {
+    !loggedIn ? setLogin(true) : setLogin(false)
+  }
+
+  const handleChange = (e) => {
+    setText(e.target.value)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            My Music App
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      {loggedIn ? 
+        <Dashboard /> :
+        <div className='loginContainer'>
+          <div>
+            <TextField onChange={handleChange} variant='standard' label='Username' required></TextField>
+          </div>
+          <div>
+            <TextField onChange={handleChange} variant='standard' label='Password' required></TextField>
+          </div>
+          <div>
+            <Button className='loginButton' variant='contained' onClick={handleLogin}>Login</Button>
+          </div>
+      </div>
+      }
+    </Box>
   );
 }
-
-export default App;
